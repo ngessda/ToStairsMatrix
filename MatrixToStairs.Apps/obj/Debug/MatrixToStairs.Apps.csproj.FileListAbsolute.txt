@@ -1,0 +1,7 @@
+C:\Users\micky\source\repos\MatrixToStairs.Apps\MatrixToStairs.Apps\bin\Debug\MatrixToStairs.Apps.exe.config
+C:\Users\micky\source\repos\MatrixToStairs.Apps\MatrixToStairs.Apps\bin\Debug\MatrixToStairs.Apps.exe
+C:\Users\micky\source\repos\MatrixToStairs.Apps\MatrixToStairs.Apps\bin\Debug\MatrixToStairs.Apps.pdb
+C:\Users\micky\source\repos\MatrixToStairs.Apps\MatrixToStairs.Apps\obj\Debug\MatrixToStairs.Apps.csproj.AssemblyReference.cache
+C:\Users\micky\source\repos\MatrixToStairs.Apps\MatrixToStairs.Apps\obj\Debug\MatrixToStairs.Apps.csproj.CoreCompileInputs.cache
+C:\Users\micky\source\repos\MatrixToStairs.Apps\MatrixToStairs.Apps\obj\Debug\MatrixToStairs.Apps.exe
+C:\Users\micky\source\repos\MatrixToStairs.Apps\MatrixToStairs.Apps\obj\Debug\MatrixToStairs.Apps.pdb
