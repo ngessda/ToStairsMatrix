@@ -47,7 +47,7 @@ namespace MatrixToStairs.Apps
             {
                 SwapColls();
             }
-            for(int i = 0; i < rows - 1; i++)
+            for(int i = 0; i < colls - 1; i++)
             {
                 for (int j = i + 1; j < rows; j++)
                 {
@@ -59,7 +59,11 @@ namespace MatrixToStairs.Apps
                 }
             }
             ValueCheck();
-            
+            if (rows > colls)
+            {
+                ToZeroAfterOne();
+            }
+
         }
         private void SwapColls()
         {
@@ -88,9 +92,9 @@ namespace MatrixToStairs.Apps
         }
         private void ValueCheck()
         {
-            for(int i = 0; i < rows && i < colls; i++)
+            for (int i = 0; i < rows && i < colls; i++)
             {
-                if(value[i,i] == 1 || value[i,i] == -1)
+                if (value[i, i] == 1 || value[i, i] == -1)
                 {
                     continue;
                 }
@@ -98,14 +102,14 @@ namespace MatrixToStairs.Apps
                 {
                     if (i == colls - 1)
                     {
-                        if (value[i, i] > value[i - 1, i] || -value[i,i] > value[i - 1, i])
+                        if (value[i, i] > value[i - 1, i] || -value[i, i] > value[i - 1, i])
                         {
                             double g = (value[i, i] - 1) / value[i - 1, i];
                             value[i, i] -= value[i - 1, i] * g;
                         }
                         else
                         {
-                            double g = (value[i,i] + 1) / value[i - 1, i];
+                            double g = (value[i, i] + 1) / value[i - 1, i];
                             value[i, i] -= value[i - 1, i] * g;
                         }
                     }
@@ -117,7 +121,16 @@ namespace MatrixToStairs.Apps
                             value[i, j] /= v;
                         }
                     }
-
+                }
+            }
+        }
+        private void ToZeroAfterOne()
+        {
+            for (int i = colls; i < rows; i++)
+            {
+                for (int j = 0; j < colls; j++)
+                {
+                    value[i, j] = 0;
                 }
             }
         }

@@ -10,7 +10,7 @@ namespace MatrixToStairs.Apps
     {
         static void Main(string[] args)
         {
-            Matrix matrix = new Matrix(3, 3);
+            Matrix matrix = new Matrix(5, 3);
             Console.WriteLine(matrix);
             matrix.ToStairs();
             Console.WriteLine(matrix);
