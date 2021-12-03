@@ -10,11 +10,16 @@ namespace MatrixToStairs.Apps
     {
         static void Main(string[] args)
         {
-            Matrix matrix = new Matrix(5, 3);
+            Matrix matrix = new Matrix(new double[,]
+            {
+                {0,0,0,0 },
+                {2,1,0,1 },
+                {0,5,1,4 }
+            });
             Console.WriteLine(matrix);
             matrix.ToStairs();
             Console.WriteLine(matrix);
-            Console.ReadKey();
+            Console.ReadLine();
         }
     }
 }
