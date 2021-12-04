@@ -8,7 +8,8 @@ namespace MatrixToStairs.Apps
 {
     class Matrix
     {
-        private int count;
+        //private int count;
+        private const double eps = 0.00001;
         private int rows;
         private int colls;
         private double[,] value;
@@ -42,133 +43,62 @@ namespace MatrixToStairs.Apps
             }
         }
 
+
         public void ToStairs()
         {
             if (!CheckToZero())
             {
                 for(int i = 0; i < rows; i++)
                 {
-                    if (!CheckRow(i))
+                    double maxValue = value[i, i % colls];
+                    for (int j = i + 1; j < rows; j++)
                     {
-                        if (CheckNextRow(i))
+                        if(Math.Abs(value[j, i % colls]) > Math.Abs(maxValue))
                         {
-                            SwapRow(i);
-                        }
-                    }
-                    if (!CheckFirstValue(i))
-                    {
-                        if (CheckFirstValueInAnFValue(i))
-                        {
-                            SwapRow(i);
-                        }
-                    }
-                    if (!CheckDiagValue(i))
-                    {
-                        if (CheckDiagValueInAnValue(i))
-                        {
-                            SwapRow(i);
-                        }
-                    }
-                }
-                for (int i = 0; i < rows && i < colls; i++) 
-                {
-                    if (!CheckFirstValue(i))
-                    {
-                        if (CheckFirstValueInAnFValue(i))
-                        {
-                            SwapRow(i);
-                            i --;
-                            if (i < 0)
+                            maxValue = value[j, i];
+                            for(int k = 0; k < colls; k++)
                             {
-                                i = 0;
+                                double t = value[i, k];
+                                value[i, k] = value[j, k];
+                                value[j, k] = t;
                             }
                         }
                     }
-                    if (i >= rows -1  || i >= colls - 1)
+                    if(Math.Abs(maxValue) > eps)
                     {
-                        break;
-                    }
-                    else if (value[i + 1, i] == 0 ) 
-                    {
-                        continue;
-                    }
-                    else
-                    {
-                        int j = i;
-                        double koef = value[i + 1, i] / value[i, i];
-                        while (j < colls)
+                        for(int j = i + 1; j < rows; j++)
                         {
-                            value[i + 1, j] -= value[i, j] * koef;
-                            j++;
+                            double koef = value[j, i] / maxValue;
+                            for(int k = 0; k < colls; k++)
+                            {
+                                value[j, k] -= value[i, k] * koef;
+                                if (Math.Abs(value[j, k]) < eps)
+                                {
+                                    value[j, k] = 0;
+                                }
+                            }
                         }
                     }
                 }
             }
         }
-        private bool CheckFirstValueInAnFValue(int x)
-        {
-            bool result = false;
-            for(int i = x + 1; i < rows; i++)
-            {
-                if(value[i,0] != 0)
-                {
-                    result = true;
-                    count = i;
-                    break;
-                }
-                else
-                {
-                    continue;
-                }
-            }
-            return result;
-        }
-        private bool CheckFirstValue(int x)
-        {
-            bool result = true;
-            if(value[x,0] == 0)
-            {
-                result = false;
-            }
-            return result;
-        }
-        private bool CheckDiagValue(int x)
-        {
-            bool result = true;
-            if (value[x, x] == 0)
-            {
-                result = false;
-            }
-            return result;
-        }
-
-        private bool CheckDiagValueInAnValue(int x)
-        {
-            bool result = false;
-            for (int i = x + 1; i < rows && i < colls; i++)
-            {
-                if (value[i, x] != 0)
-                {
-                    result = true;
-                    count = i;
-                    break;
-                }
-                else
-                {
-                    continue;
-                }
-            }
-            return result;
-        }
-            
+        //{
+        //    int j = i;
+        //    double koef = value[i + 1, i] / value[i, i];
+        //    while (j < colls)
+        //    {
+        //        value[i + 1, j] -= value[i, j] * koef;
+        //        j++;
+        //    }
+        //}
         private bool CheckToZero()
         {
-            bool result = true ;
-            for (int i = 0; i < rows; i++) 
+            bool result = true;
+            for (int i = 0; i < rows; i++)
             {
                 for (int j = 0; j < colls; j++)
                 {
-                    if(value[i,j] == 0)
+                    if (value[i, j] == 0)
                     {
                         continue;
                     }
@@ -180,51 +110,6 @@ namespace MatrixToStairs.Apps
                 }
             }
             return result;
-        }
-
-        private bool CheckNextRow(int x)
-        {
-            bool result = false;
-            for (int i = x + 1; i < rows; i++)
-            {
-                for(int j = 0; j < colls; j++)
-                {
-                    if (value[i, j] != 0)
-                    {
-                        result = true;
-                        count = i;
-                        break;
-                    }
-                    else
-                    {
-                        continue;
-                    }
-                }
-            }
-            return result;
-        }
-        private bool CheckRow(int x)
-        {
-            bool result = false ;
-            for (int i = 0; i < colls; i++)
-            {
-                if (value[x, i] != 0)
-                {
-                    result = true;
-                }
-            }
-            return result;
-        }
-
-        private void SwapRow(int x)
-        {
-            double slave = 0;
-            for (int i = 0; i < colls; i++)
-            {
-                slave = value[x, i];
-                value[x, i] = value[count, i];
-                value[count, i] = slave;
-            }
         }
 
         public override string ToString()
@@ -340,6 +225,108 @@ namespace MatrixToStairs.Apps
         //        {
         //            value[i, j] = 0;
         //        }
+        //    }
+        //}
+        //private bool CheckFirstValueInAnFValue(int x)
+        //{
+        //    bool result = false;
+        //    for(int i = x + 1; i < rows; i++)
+        //    {
+        //        if(value[i,0] != 0)
+        //        {
+        //            result = true;
+        //            count = i;
+        //            break;
+        //        }
+        //        else
+        //        {
+        //            continue;
+        //        }
+        //    }
+        //    return result;
+        //}
+        //private bool CheckFirstValue(int x)
+        //{
+        //    bool result = true;
+        //    if(value[x,0] == 0)
+        //    {
+        //        result = false;
+        //    }
+        //    return result;
+        //}
+        //private bool CheckDiagValue(int x)
+        //{
+        //    bool result = true;
+        //    if (value[x, x] == 0)
+        //    {
+        //        result = false;
+        //    }
+        //    return result;
+        //}
+
+        //private bool CheckDiagValueInAnValue(int x)
+        //{
+        //    bool result = false;
+        //    for (int i = x + 1; i < rows && i < colls; i++)
+        //    {
+        //        if (value[i, x] != 0)
+        //        {
+        //            result = true;
+        //            count = i;
+        //            break;
+        //        }
+        //        else
+        //        {
+        //            continue;
+        //        }
+        //    }
+        //    return result;
+        //}
+
+
+
+        //private bool CheckNextRow(int x)
+        //{
+        //    bool result = false;
+        //    for (int i = x + 1; i < rows; i++)
+        //    {
+        //        for(int j = 0; j < colls; j++)
+        //        {
+        //            if (value[i, j] != 0)
+        //            {
+        //                result = true;
+        //                count = i;
+        //                break;
+        //            }
+        //            else
+        //            {
+        //                continue;
+        //            }
+        //        }
+        //    }
+        //    return result;
+        //}
+        //private bool CheckRow(int x)
+        //{
+        //    bool result = false ;
+        //    for (int i = 0; i < colls; i++)
+        //    {
+        //        if (value[x, i] != 0)
+        //        {
+        //            result = true;
+        //        }
+        //    }
+        //    return result;
+        //}
+
+        //private void SwapRow(int x)
+        //{
+        //    double slave = 0;
+        //    for (int i = 0; i < colls; i++)
+        //    {
+        //        slave = value[x, i];
+        //        value[x, i] = value[count, i];
+        //        value[count, i] = slave;
         //    }
         //}
     }
